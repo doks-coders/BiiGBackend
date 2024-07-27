@@ -1,0 +1,12 @@
+@BiiGBackend.Web_HostAddress = https://localhost:7040/api
+
+GET {{BiiGBackend.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{BiiGBackend.Web_HostAddress}}/auth/check
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlYWxAZ21haWwuY29tIiwicm9sZXMiOiJDdXN0b21lciIsIm5hbWVpZCI6ImE2YjRjNWUzLTY2NmYtNDVjYi02NTZkLTA4ZGM5MWYwYmJlOCIsIm5iZiI6MTcxODk3NDk5MSwiZXhwIjoxNzE5MDYxMzkxLCJpYXQiOjE3MTg5NzQ5OTEsImlzcyI6ImJpaWctYmFja2VuZC1hcGkiLCJhdWQiOiJiaWlnLWJhY2tlbmQtYXBpLWJvYXJkcyJ9.Kv7feXhct-V3oEaBGGrJlTN7BjQ9Zu33XhQAF4xolTY
+Accept: application/json
+
+
