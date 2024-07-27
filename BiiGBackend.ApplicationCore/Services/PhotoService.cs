@@ -18,7 +18,7 @@ namespace BiiGBackend.ApplicationCore.Services
 				ApiKey = config.Value.ApiKey,
 				ApiSecret = config.Value.ApiSecret,
 			};
-			cloudinary = new Cloudinary(acc);
+			cloudinary = new Cloudinary(acc); 
 		}
 		public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
 		{
