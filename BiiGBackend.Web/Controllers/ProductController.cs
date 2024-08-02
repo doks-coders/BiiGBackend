@@ -39,6 +39,13 @@ namespace BiiGBackend.Web.Controllers
 		}
 
 
+		[HttpDelete("delete-product/{productId}")]
+		public async Task<ActionResult> DeleteProduct(Guid productId)
+		{
+			return await _productService.DeleteProduct(productId);
+		}
+
+
 		[HttpPost("upsert-product/{id}")]
 		public async Task<ActionResult> UpsertProduct([FromBody] ProductRequest request, Guid id)
 		{

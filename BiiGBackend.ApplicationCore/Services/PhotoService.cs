@@ -1,8 +1,11 @@
 ﻿using BiiGBackend.ApplicationCore.Services.Interfaces;
+using BiiGBackend.Infrastructure.Data;
+using BiiGBackend.Infrastructure.Repositories.Interfaces;
 using BiiGBackend.Models.SharedModels;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace BiiGBackend.ApplicationCore.Services
@@ -10,7 +13,12 @@ namespace BiiGBackend.ApplicationCore.Services
 	public class PhotoService : IPhotoService
 	{
 		private readonly Cloudinary cloudinary;
-		public PhotoService(IOptions<CloudinarySettings> config)
+		private readonly IUnitOfWork _unitOfWork;
+		private readonly ApplicationDbContext _db;
+
+		
+
+		public PhotoService(IOptions<CloudinarySettings> config, IUnitOfWork unitOfWork, ApplicationDbContext db)
 		{
 			Account acc = new Account()
 			{
@@ -18,7 +26,9 @@ namespace BiiGBackend.ApplicationCore.Services
 				ApiKey = config.Value.ApiKey,
 				ApiSecret = config.Value.ApiSecret,
 			};
-			cloudinary = new Cloudinary(acc); 
+			cloudinary = new Cloudinary(acc);
+			_unitOfWork = unitOfWork;
+			_db = db;
 		}
 		public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
 		{
@@ -42,7 +52,18 @@ namespace BiiGBackend.ApplicationCore.Services
 
 		}
 
-		public async Task<DeletionResult> DeletePhotoAsync(string publicId)
+		public async Task DeleteProductImages(Guid productId)
+		{
+			var photos = await _db.Photos.Where(u => u.ProductId == productId).ToListAsync();
+			photos.ForEach(async(photo) =>
+			{
+				await DeletePhotoAsync(photo.PublicId);
+			});
+			_db.Photos.RemoveRange(photos);
+			
+		}
+	
+	public async Task<DeletionResult> DeletePhotoAsync(string publicId)
 		{
 			DeletionResult deletionResult = new DeletionResult();
 			DeletionParams deleteParams = new DeletionParams(publicId);

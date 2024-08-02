@@ -27,6 +27,7 @@ namespace BiiGBackend.Infrastructure.Data
 		public DbSet<OrderItem> OrderItems { get; set; }
 		public DbSet<Photo> Photos { get; set; }
 		public DbSet<Collection> Collections { get; set; }
+		public DbSet<StaticData> StaticDatas { get; set; }
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

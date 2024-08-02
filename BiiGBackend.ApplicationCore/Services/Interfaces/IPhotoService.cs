@@ -7,5 +7,6 @@ namespace BiiGBackend.ApplicationCore.Services.Interfaces
 	{
 		Task<DeletionResult> DeletePhotoAsync(string publicId);
 		Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
+		Task DeleteProductImages(Guid productId);
 	}
 }

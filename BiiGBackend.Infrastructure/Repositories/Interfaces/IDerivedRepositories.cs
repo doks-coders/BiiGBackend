@@ -49,6 +49,11 @@ namespace BiiGBackend.Infrastructure.Repositories.Interfaces
 
 	}
 
+	public interface IStaticDataRepository : IBaseRepository<StaticData>
+	{
+
+	}
+
 }
 
 

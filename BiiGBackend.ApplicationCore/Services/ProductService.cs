@@ -86,6 +86,8 @@ namespace BiiGBackend.ApplicationCore.Services
 			return ResponseModal.Send(response.FirstOrDefault());
 		}
 
+	
+
 
 		public async Task<ResponseModal> GetRecentlyAddedProducts()
 		{
@@ -148,6 +150,7 @@ namespace BiiGBackend.ApplicationCore.Services
 
 		public async Task<ResponseModal> DeleteProduct(Guid productId)
 		{
+			await _photoService.DeleteProductImages(productId);
 			if (await _unitOfWork.Product.DeleteOne(productId))
 			{
 				return ResponseModal.Send("Deleted Successfully");

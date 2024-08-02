@@ -5,6 +5,7 @@ using BiiGBackend.Models.Extensions;
 using BiiGBackend.Models.ReqResponses;
 using BiiGBackend.Models.Requests;
 using BiiGBackend.Models.SharedModels;
+using System.Text.Json;
 
 namespace BiiGBackend.ApplicationCore.Services
 {
@@ -98,6 +99,7 @@ namespace BiiGBackend.ApplicationCore.Services
 		}
 
 
+
 		public async Task<ResponseModal> CreateCollection(CollectionReqResponse request)
 		{
 
@@ -121,8 +123,57 @@ namespace BiiGBackend.ApplicationCore.Services
 		public async Task<ResponseModal> DeleteCollection(Guid Id)
 		{
 			var collection = await _unitOfWork.Collections.GetItem(u => u.Id == Id);
-			await _unitOfWork.Collections.DeleteItem(collection);
+			var deleted = await _unitOfWork.Collections.DeleteItem(collection);
+			if (!deleted) throw new CustomException("Did not delete successfully");
 			return ResponseModal.Send(collection);
+		}
+
+
+		public class StaticFields
+		{
+			public double? USDtoNaira {  get; set; }
+			public double? OverseasTransport { get; set; }
+		}
+
+	
+		public async Task SetStaticData(StaticFields fields)
+		{
+			var staticFieldJSON = JsonSerializer.Serialize(fields);
+
+			var staticData =await _unitOfWork.StaticDatas.GetItem(u => u.Id != null);
+			if (staticData == null)
+			{
+				await _unitOfWork.StaticDatas.AddItem(new() { Data = staticFieldJSON });
+			}
+			else
+			{
+				var gottenFields = JsonSerializer.Deserialize<StaticFields>(staticData.Data);
+
+				if (fields.USDtoNaira!=null)
+				{
+					gottenFields.USDtoNaira = fields.USDtoNaira;
+				}
+
+				if (fields.OverseasTransport != null)
+				{
+					gottenFields.OverseasTransport = fields.OverseasTransport;
+				}
+				var updatedStatic =  JsonSerializer.Serialize(gottenFields);
+
+				staticData.Data = updatedStatic;
+
+				await _unitOfWork.Save();
+
+			}
+				
+		}
+		
+		public string GetStaticData(double USDtoNaira = 1000, double OverseasTransport = 1000)
+		{
+			Dictionary<string, string> staticKeyValue = new Dictionary<string, string>();
+			staticKeyValue[nameof(USDtoNaira)] = USDtoNaira.ToString();
+			staticKeyValue[nameof(OverseasTransport)] = OverseasTransport.ToString();
+			return JsonSerializer.Serialize(staticKeyValue);
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace BiiGBackend.Infrastructure.Repositories
 
 		public IShoppingCartItemRepository ShoppingCartItem { get; }
 		public ICollectionsRepository Collections { get; }
-
+		public IStaticDataRepository StaticDatas { get; }
 
 		private readonly ApplicationDbContext _context;
 		public UnitOfWork(ApplicationDbContext context)
@@ -28,6 +28,7 @@ namespace BiiGBackend.Infrastructure.Repositories
 			OrderHeaders = new OrderHeaderRepository(context);
 			OrderItems = new OrderItemsRepository(context);
 			Collections = new CollectionRepository(context);
+			StaticDatas = new StaticDataRepository(context);
 
 
 		}

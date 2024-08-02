@@ -11,6 +11,7 @@
 		public IOrderHeaderRepository OrderHeaders { get; }
 		public IOrderItemsRepository OrderItems { get; }
 		public ICollectionsRepository Collections { get; }
+		public IStaticDataRepository StaticDatas { get; }
 		Task<bool> Save();
 	}
 }

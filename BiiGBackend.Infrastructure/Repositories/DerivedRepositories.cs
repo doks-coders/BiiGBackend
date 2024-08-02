@@ -23,16 +23,16 @@ namespace BiiGBackend.Infrastructure.Repositories
 
 	public class ProductItemRepository : BaseRepository<ProductItem>, IProductItemRepository
 	{
+		private readonly ApplicationDbContext _context;
 		public ProductItemRepository(ApplicationDbContext context) : base(context)
 		{
-
+			_context = context;
 		}
 
 		public async Task<bool> DeleteOne(Guid id)
 		{
 			var product = await GetItem(u => u.Id == id);
-			await DeleteItem(product);
-			return await _context.SaveChangesAsync() > 0;
+			return await DeleteItem(product);	
 		}
 	}
 
@@ -111,6 +111,14 @@ namespace BiiGBackend.Infrastructure.Repositories
 	public class CollectionRepository : BaseRepository<Collection>, ICollectionsRepository
 	{
 		public CollectionRepository(ApplicationDbContext context) : base(context)
+		{
+
+		}
+	}
+
+	public class StaticDataRepository : BaseRepository<StaticData>, IStaticDataRepository
+	{
+		public StaticDataRepository(ApplicationDbContext context) : base(context)
 		{
 
 		}
