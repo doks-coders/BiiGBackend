@@ -183,6 +183,9 @@ namespace BiiGBackend.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<double?>("LogisticsFee")
+                        .HasColumnType("double precision");
+
                     b.Property<DateTime?>("OrderDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -223,8 +226,17 @@ namespace BiiGBackend.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<double?>("TotalInDollars")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TotalInNaira")
+                        .HasColumnType("double precision");
+
                     b.Property<string>("TrackingNumber")
                         .HasColumnType("text");
+
+                    b.Property<double?>("USDToNairaRate")
+                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 
@@ -346,6 +358,9 @@ namespace BiiGBackend.Infrastructure.Migrations
                     b.Property<int?>("ProductStockAmount")
                         .HasColumnType("integer");
 
+                    b.Property<bool?>("isDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<bool?>("isFeatured")
                         .HasColumnType("boolean");
 
@@ -455,6 +470,24 @@ namespace BiiGBackend.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Collections");
+                });
+
+            modelBuilder.Entity("BiiGBackend.Models.Entities.StaticItems.StaticData", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StaticDatas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

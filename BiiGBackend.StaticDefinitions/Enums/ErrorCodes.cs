@@ -2,8 +2,10 @@
 {
 	public enum ErrorCodes
 	{
+		NotAuthenticatedLogin,
 		IncorrectPassword,
 		UserAuthDoesNotExist,
+		CartItemNotRetrievable,
 		UserDoesNotExist,
 		CourseDoesNotExist,
 		UserExist,

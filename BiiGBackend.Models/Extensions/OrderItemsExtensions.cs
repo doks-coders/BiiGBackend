@@ -17,6 +17,7 @@ namespace BiiGBackend.Models.Extensions
 					Size = u.Size,
 					IsDiscounted = u.Product.IsDiscounted,
 					Id = u.Id,
+					ProductId=u.ProductId,
 					ProductAmount = u.Count,
 					ProductDisplayPrice = u.OrderedDisplayPrice.ToString(),
 					ProductRealPrice = u.OrderedRealPrice.ToString(),

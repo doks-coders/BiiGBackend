@@ -11,6 +11,8 @@ namespace BiiGBackend.Infrastructure.EntityConfigurations
 			builder.HasMany(u => u.ProductPhotos).WithOne(u => u.Product)
 				.HasForeignKey(u => u.ProductId)
 				.OnDelete(DeleteBehavior.NoAction);
+
+			//builder.HasQueryFilter(u => u.isDeleted == false);
 		}
 	}
 }

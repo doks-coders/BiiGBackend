@@ -27,6 +27,7 @@ namespace BiiGBackend.Models.Entities.Product
 		public string? ProductImage { get; set; }
 		public int? ProductStockAmount { get; set; }
 
+		public bool? isDeleted { get; set; } = false;
 		public bool? isFeatured { get; set; }
 		public bool? isRecentlyAdded { get; set; }
 

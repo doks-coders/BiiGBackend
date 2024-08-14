@@ -126,7 +126,14 @@ namespace TutorApplication.SharedModels.Models
 						{ErrorKeyWord,((int)HttpStatusCode.BadRequest).ToString() }
 					}
 				},
-
+					{
+					ErrorCodes.NotAuthenticatedLogin,
+					new()
+					{
+						{MessageKeyWord,"Login First"},
+						{ErrorKeyWord,((int)HttpStatusCode.Forbidden).ToString() }
+					}
+				},
 				
 				{
 					ErrorCodes.UserAuthDoesNotExist,
@@ -136,11 +143,19 @@ namespace TutorApplication.SharedModels.Models
 						{ErrorKeyWord,((int)HttpStatusCode.BadRequest).ToString() }
 					}
 				},
+				{
+					ErrorCodes.CartItemNotRetrievable,
+					new()
+					{
+						{MessageKeyWord,"Cart is not authenticated"},
+						{ErrorKeyWord,((int)HttpStatusCode.Forbidden).ToString() }
+					}
+				},
 
 
 
 
-
+				
 			};
 	}
 }

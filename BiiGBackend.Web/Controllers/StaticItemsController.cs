@@ -2,6 +2,7 @@
 using BiiGBackend.Models.ReqResponses;
 using BiiGBackend.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
+using static BiiGBackend.ApplicationCore.Services.StaticItemsService;
 
 namespace BiiGBackend.Web.Controllers
 {
@@ -59,6 +60,17 @@ namespace BiiGBackend.Web.Controllers
 		public async Task<ActionResult> DeleteCategory(Guid id)
 		{
 			return await _staticServices.DeleteCategory(id);
+		}
+
+		[HttpPost("set-static-field")]
+		public async Task<ActionResult> SetStaticData([FromBody]StaticFields request)
+		{
+			return await _staticServices.SetStaticData(request);
+		}
+		[HttpGet("get-static-field")]
+		public async Task<ActionResult> GetStaticData()
+		{
+			return await _staticServices.GetStaticData();
 		}
 
 

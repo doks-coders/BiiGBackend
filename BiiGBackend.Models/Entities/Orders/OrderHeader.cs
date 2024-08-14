@@ -46,6 +46,10 @@ namespace BiiGBackend.Models.Entities.Orders
 
 		public string PostalCode { get; set; }
 
+		public double? USDToNairaRate { get; set; }
+		public double? TotalInDollars { get; set; }	
+		public double? TotalInNaira { get; set; }
+		public double? LogisticsFee { get; set; }
 		public List<OrderItem> OrderItems { get; set; } = new();
 
 

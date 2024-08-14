@@ -30,7 +30,7 @@ namespace BiiGBackend.ApplicationCore.Services
 			}
 			catch (Exception ex)
 			{
-				throw new CustomException(ErrorCodes.UserAuthDoesNotExist);
+				throw new CustomException(ErrorCodes.CartItemNotRetrievable);
 			}
 		}
 
@@ -44,7 +44,7 @@ namespace BiiGBackend.ApplicationCore.Services
 			}
 			catch (Exception ex)
 			{
-				throw new CustomException(ErrorCodes.UserAuthDoesNotExist);
+				throw new CustomException(ErrorCodes.NotAuthenticatedLogin);
 			}
 
 			var shoppingCartItem = await _unitOfWork.ShoppingCartItem.GetItems(u => u.ApplicationUserId == id && u.ProductId == request.ProductId);

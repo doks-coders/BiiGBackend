@@ -1,6 +1,7 @@
 ﻿using BiiGBackend.Models.ReqResponses;
 using BiiGBackend.Models.Requests;
 using BiiGBackend.Models.SharedModels;
+using static BiiGBackend.ApplicationCore.Services.StaticItemsService;
 
 namespace BiiGBackend.ApplicationCore.Services.Interfaces
 {
@@ -13,6 +14,9 @@ namespace BiiGBackend.ApplicationCore.Services.Interfaces
 		Task<ResponseModal> UpdateCategory(CategoryRequest request);
 		Task<ResponseModal> DeleteCategory(Guid Id);
 
+		Task<ResponseModal> GetStaticData();
+		Task<StaticFields> GetStaticDataFromDatabase();
+		Task<ResponseModal> SetStaticData(StaticFields fields);
 		Task<ResponseModal> GetAllCategories();
 		Task<ResponseModal> GetAllBrands();
 		Task<ResponseModal> GetAllCollections();

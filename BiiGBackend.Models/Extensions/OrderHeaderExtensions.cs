@@ -7,6 +7,8 @@ namespace BiiGBackend.Models.Extensions
 	{
 		public static OrderExtendedResponse GetOrderExtendedResponses(this OrderHeader orderHeader, IEnumerable<OrderItemResponse> orderItemsResponse)
 		{
+			
+
 			return new OrderExtendedResponse()
 			{
 				Id = orderHeader.Id,
@@ -28,9 +30,15 @@ namespace BiiGBackend.Models.Extensions
 
 				PostalCode = orderHeader.PostalCode,
 				OrderItems = orderItemsResponse.ToList(),
-				TrackingNumber = orderHeader.TrackingNumber
+				TrackingNumber = orderHeader.TrackingNumber,
+				TotalInNaira = orderHeader.TotalInNaira,
+				TotalInDollars = orderHeader.TotalInDollars,
+				USDToNairaRate = orderHeader.USDToNairaRate,
+				LogisticsFee = orderHeader.LogisticsFee
 
 			};
+
+		
 
 
 		}

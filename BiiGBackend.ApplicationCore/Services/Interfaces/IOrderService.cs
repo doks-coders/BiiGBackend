@@ -16,5 +16,7 @@ namespace BiiGBackend.ApplicationCore.Services.Interfaces
 
 		Task<ResponseModal> GetAllOrders();
 		Task<ResponseModal> GetOrder(Guid orderId);
+
+		Task<ResponseModal> GetUserOrders(Guid userId);
 	}
 }

@@ -136,7 +136,7 @@ namespace BiiGBackend.ApplicationCore.Services
 		}
 
 	
-		public async Task SetStaticData(StaticFields fields)
+		public async Task<ResponseModal> SetStaticData(StaticFields fields)
 		{
 			var staticFieldJSON = JsonSerializer.Serialize(fields);
 
@@ -165,9 +165,26 @@ namespace BiiGBackend.ApplicationCore.Services
 				await _unitOfWork.Save();
 
 			}
-				
+			return ResponseModal.Send();
 		}
-		
+
+		public async Task<StaticFields> GetStaticDataFromDatabase()
+		{
+			var staticData = await _unitOfWork.StaticDatas.GetItem(u => u.Id != null);
+			if (staticData == null)
+			{
+				return new StaticFields();
+			}
+			var gottenFields = JsonSerializer.Deserialize<StaticFields>(staticData.Data);
+			return gottenFields;
+		}
+
+		public async Task<ResponseModal> GetStaticData()
+		{
+			
+			return ResponseModal.Send(await GetStaticDataFromDatabase());
+		}
+
 		public string GetStaticData(double USDtoNaira = 1000, double OverseasTransport = 1000)
 		{
 			Dictionary<string, string> staticKeyValue = new Dictionary<string, string>();

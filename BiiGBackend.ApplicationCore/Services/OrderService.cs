@@ -7,6 +7,7 @@ using BiiGBackend.Models.Responses;
 using BiiGBackend.Models.SharedModels;
 using BiiGBackend.StaticDefinitions.Constants;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics.Metrics;
 using System.Security.Claims;
 
 namespace BiiGBackend.ApplicationCore.Services
@@ -16,12 +17,14 @@ namespace BiiGBackend.ApplicationCore.Services
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IStripePayment _stripePayment;
 		private readonly IPaystackService _paystackService;
+		private readonly IStaticItemsService _staticItemsService;
 
-		public OrderService(IUnitOfWork unitOfWork, IStripePayment stripePayment, IPaystackService paystackService)
+		public OrderService(IUnitOfWork unitOfWork, IStripePayment stripePayment, IPaystackService paystackService, IStaticItemsService staticItemsService)
 		{
 			_unitOfWork = unitOfWork;
 			_stripePayment = stripePayment;
 			_paystackService = paystackService;
+			_staticItemsService = staticItemsService;
 		}
 
 		[Authorize]
@@ -48,6 +51,35 @@ namespace BiiGBackend.ApplicationCore.Services
 			var cartItems = await _unitOfWork.ShoppingCartItem.GetItems(u => u.ApplicationUserId == user.GetUserId(), includeProperties: "Product");
 			var orderItems = cartItems.ConvertToOrders(order.Id);
 			var totalAmount = orderItems.Sum(u => u.Count * u.OrderedDisplayPrice);
+			var staticData = await _staticItemsService.GetStaticDataFromDatabase();
+
+			var retrievedOrder = await _unitOfWork.OrderHeaders.GetItem(u => u.Id == order.Id);
+
+			/**
+			 * 	public double? USDToNairaRate { get; set; }
+		public double? TotalInDollars { get; set; }	
+		public double? TotalInNaira { get; set; }
+		public double? LogisticsFee { get; set; }
+			 */
+
+			if (staticData.OverseasTransport != null)
+			{
+				retrievedOrder.LogisticsFee = (double)staticData.OverseasTransport;
+				totalAmount += (double)staticData.OverseasTransport;
+			}
+
+			retrievedOrder.TotalInDollars = totalAmount;
+
+			if (staticData.USDtoNaira != null)
+			{
+				retrievedOrder.USDToNairaRate = (double)staticData.USDtoNaira;
+				totalAmount = totalAmount * (double)staticData.USDtoNaira;
+			}
+
+			
+			retrievedOrder.TotalInNaira = totalAmount;
+			await _unitOfWork.Save();
+
 			await _unitOfWork.OrderItems.AddItems(orderItems);
 
 
@@ -59,7 +91,7 @@ namespace BiiGBackend.ApplicationCore.Services
 
 			return ResponseModal.Send(payStackUrl);
 		}
-
+		
 
 
 		public async Task<ResponseModal> ConfirmOrder(Guid orderId)
@@ -86,7 +118,7 @@ namespace BiiGBackend.ApplicationCore.Services
 
 		public async Task<ResponseModal> GetAllOrders()
 		{
-			var orderItems = await _unitOfWork.OrderHeaders.GetItems(u => u.Id != null, includeProperties: "ApplicationUser,OrderItems");
+			var orderItems = await _unitOfWork.OrderHeaders.GetItems(u => u.Id != null &&u.PaymentStatus!=PaymentStatus.PaymentStatusPending, includeProperties: "ApplicationUser,OrderItems");
 			var response = orderItems.OrderByDescending(u => u.Created).Select(e => new OrderResponse()
 			{
 				DateCreated = e.Created,
@@ -95,7 +127,24 @@ namespace BiiGBackend.ApplicationCore.Services
 				LastName = e.LastName,
 				Id = e.Id,
 				TrackingNumber = e.TrackingNumber,
-				TotalPrice = e.OrderItems.Sum(u => u.OrderedDisplayPrice)
+				TotalPrice = e.TotalInDollars != null ? (double)e.TotalInDollars : 0,
+			});
+			return ResponseModal.Send(response);
+		}
+
+
+		public async Task<ResponseModal> GetUserOrders(Guid userId)
+		{
+			var orderItems = await _unitOfWork.OrderHeaders.GetItems(u => u.ApplicationUserId == userId && u.PaymentStatus!=PaymentStatus.PaymentStatusPending, includeProperties: "ApplicationUser,OrderItems");
+			var response = orderItems.OrderByDescending(u => u.Created).Select(e => new OrderResponse()
+			{
+				DateCreated = e.Created,
+				EmailAddress = e.EmailAddress,
+				FirstName = e.FirstName,
+				LastName = e.LastName,
+				Id = e.Id,
+				TrackingNumber = e.TrackingNumber,
+				TotalPrice = e.TotalInDollars!=null?(double)e.TotalInDollars:0,
 			});
 			return ResponseModal.Send(response);
 		}

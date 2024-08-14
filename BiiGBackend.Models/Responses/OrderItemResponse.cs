@@ -33,10 +33,17 @@
 		public string PaymentStatus { get; set; }
 		public string? TrackingNumber { get; set; }
 		public DateTime DateCreated { get; set; }
+		public double? TotalAmount { get; set; }
+		public double?  TotalInNaira { get; set; }
+		public double? TotalInDollars { get; set; }
+		public double? USDToNairaRate { get; set; }
+		public double? LogisticsFee { get; set; }
 	}
 	public class OrderItemResponse
 	{
 		public Guid Id { get; set; }
+		
+		public Guid ProductId { get; set; }
 		public string ProductName { get; set; }
 		public string Size { get; set; }
 		public string ProductBrand { get; set; }

@@ -1,4 +1,5 @@
 ﻿using BiiGBackend.ApplicationCore.Services.Interfaces;
+using BiiGBackend.Models.Extensions;
 using BiiGBackend.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,12 @@ namespace BiiGBackend.Web.Controllers
 		public async Task<ActionResult> GetOrder(Guid orderId)
 		{
 			return await _orderService.GetOrder(orderId);
+		}
+
+		[HttpGet("get-user-order")]
+		public async Task<ActionResult> GetUserOrder()
+		{
+			return await _orderService.GetUserOrders(User.GetUserId());
 		}
 
 		[HttpGet("process-order/{orderId}")]
