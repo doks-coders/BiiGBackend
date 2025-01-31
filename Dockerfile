@@ -80,6 +80,9 @@ WORKDIR /app
 #C:\Users\HP\Downloads\flyctl-0.2.4\flyctl-0.2.4\bin\flyctl.exe launch --image guonnie/locationquestions:latest
 
 COPY --from=build-env /app/out .
+COPY BiiGBackend.Web/Videos /app/Videos  
+#Copy the Videos folder from your project structure
+
 ENTRYPOINT [ "dotnet", "BiiGBackend.Web.dll" ]
 
 #So if you decided to call your project something other than API at this point, 

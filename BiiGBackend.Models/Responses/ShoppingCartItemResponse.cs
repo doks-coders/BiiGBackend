@@ -1,18 +1,18 @@
 ﻿namespace BiiGBackend.Models.Responses
 {
-	public class ShoppingCartItemResponse
-	{
-		public Guid Id { get; set; }
-		public string ProductName { get; set; }
-		public string ProductBrand { get; set; }
-		public double ProductDisplayPrice { get; set; }
-		public bool IsDiscounted { get; set; }
-		public double ProductRealPrice { get; set; }
-		public string ProductImage { get; set; }
-		public int ProductAmount { get; set; }
-		public string Size { get; set; } = string.Empty;
+    public class ShoppingCartItemResponse
+    {
+        public Guid Id { get; set; }
+        public string ProductName { get; set; }
+        public string ProductBrand { get; set; }
+        public double ProductDisplayPrice { get; set; }
+        public bool IsDiscounted { get; set; }
+        public double ProductRealPrice { get; set; }
+        public string ProductImage { get; set; }
+        public int ProductAmount { get; set; }
+        public string Size { get; set; } = string.Empty;
 
-	}
+    }
 }
 
 /*

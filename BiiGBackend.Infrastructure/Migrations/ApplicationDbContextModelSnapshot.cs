@@ -57,17 +57,7 @@ namespace BiiGBackend.Infrastructure.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AppRoleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AppUserId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("AppRoleId");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("RoleId");
 
@@ -115,6 +105,9 @@ namespace BiiGBackend.Infrastructure.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
+
+                    b.Property<bool?>("PasswordLock")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
@@ -199,6 +192,9 @@ namespace BiiGBackend.Infrastructure.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("PaymentIntentId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PaymentProvider")
                         .HasColumnType("text");
 
                     b.Property<string>("PaymentStatus")
@@ -340,8 +336,8 @@ namespace BiiGBackend.Infrastructure.Migrations
                     b.Property<bool>("ProductDetailsUploaded")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("ProductDiscountPercent")
-                        .HasColumnType("integer");
+                    b.Property<double?>("ProductDiscountPercent")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("ProductImage")
                         .HasColumnType("text");
@@ -582,26 +578,14 @@ namespace BiiGBackend.Infrastructure.Migrations
                 {
                     b.HasOne("BiiGBackend.Models.Entities.Identity.AppRole", "AppRole")
                         .WithMany("UserRoles")
-                        .HasForeignKey("AppRoleId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BiiGBackend.Models.Entities.Identity.ApplicationUser", "AppUser")
                         .WithMany("UserRoles")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BiiGBackend.Models.Entities.Identity.AppRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BiiGBackend.Models.Entities.Identity.ApplicationUser", null)
-                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppRole");

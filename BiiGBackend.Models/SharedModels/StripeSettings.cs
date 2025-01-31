@@ -1,8 +1,8 @@
 ﻿namespace Indian.Utility
 {
-	public class StripeSettings
-	{
-		public string SecretKey { get; set; }
-		public string PublicKey { get; set; }
-	}
+    public class StripeSettings
+    {
+        public string SecretKey { get; set; }
+        public string PublicKey { get; set; }
+    }
 }

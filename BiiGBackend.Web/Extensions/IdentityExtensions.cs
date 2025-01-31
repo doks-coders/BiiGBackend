@@ -7,33 +7,35 @@ using System.Text;
 
 namespace BiiGBackend.Web.Extensions
 {
-	public static class IdentityExtensions
-	{
-		public static IServiceCollection ConfigureIdentity(this IServiceCollection services, IConfiguration config)
-		{
-			services.AddIdentityCore<ApplicationUser>(e =>
-			{
-				e.Password.RequireUppercase = false;
-				e.Password.RequireLowercase = false;
-				e.Password.RequiredLength = 6;
-				e.Password.RequireNonAlphanumeric = false;
-			})
-				.AddRoles<AppRole>()
-				.AddRoleManager<RoleManager<AppRole>>()
-				.AddEntityFrameworkStores<ApplicationDbContext>();
+    public static class IdentityExtensions
+    {
+        public static IServiceCollection ConfigureIdentity(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddIdentityCore<ApplicationUser>(e =>
+            {
+                e.Password.RequireUppercase = false;
+                e.Password.RequireLowercase = false;
+                e.Password.RequiredLength = 6;
+                e.Password.RequireNonAlphanumeric = false;
+            })
+                .AddRoles<AppRole>()
+                .AddRoleManager<RoleManager<AppRole>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+              .AddDefaultTokenProviders();
 
 
-			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(u =>
-			{
-				u.TokenValidationParameters = new()
-				{
-					ValidateIssuer = false,
-					ValidateAudience = false,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("JwtOptions:Key").Value)),
-				};
-			});
 
-			return services;
-		}
-	}
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(u =>
+            {
+                u.TokenValidationParameters = new()
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("JwtOptions:Key").Value)),
+                };
+            });
+
+            return services;
+        }
+    }
 }

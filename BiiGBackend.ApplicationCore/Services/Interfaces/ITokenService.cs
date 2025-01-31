@@ -2,8 +2,8 @@
 
 namespace BiiGBackend.ApplicationCore.Services.Interfaces
 {
-	public interface ITokenService
-	{
-		string CreateToken(ApplicationUser user);
-	}
+    public interface ITokenService
+    {
+        string CreateToken(ApplicationUser user);
+    }
 }
