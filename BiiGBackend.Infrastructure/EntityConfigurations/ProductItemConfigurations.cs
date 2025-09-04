@@ -23,6 +23,8 @@ namespace BiiGBackend.Infrastructure.EntityConfigurations
 
 			builder.OwnsMany(f => f.Users).ToJson();
 			//builder.HasQueryFilter(u => u.isDeleted == false);
+
+
 		}
 	}
 
