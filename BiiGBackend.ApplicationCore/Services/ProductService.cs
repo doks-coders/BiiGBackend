@@ -99,6 +99,7 @@ namespace BiiGBackend.ApplicationCore.Services
 
 
 
+
         public async Task<ResponseModal> GetRecentlyAddedProducts()
         {
             var product = await _unitOfWork.Product.GetItems(u => u.isRecentlyAdded == true && u.isDeleted == false, includeProperties: "ProductPhotos,ProductBrand,ProductCategory");
