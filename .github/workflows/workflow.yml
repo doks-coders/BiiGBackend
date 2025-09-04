@@ -7,7 +7,7 @@ on:
 
 env:
   DOCKER_IMAGE: guonnie/biigbackend     # change if needed
-  DOCKER_CONTEXT: ./  # path to folder with Dockerfile (adjust if yours differs)
+  BUILD_CONTEXT: ./  # path to folder with Dockerfile (adjust if yours differs)
 
 jobs:
   build-push-deploy:
@@ -37,7 +37,7 @@ jobs:
         id: build_push
         uses: docker/build-push-action@v6
         with:
-          context: ${{ env.DOCKER_CONTEXT }}
+          context: ${{ env.BUILD_CONTEXT }}
           push: true
           tags: |
             ${{ env.DOCKER_IMAGE }}:latest
