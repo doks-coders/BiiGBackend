@@ -86,6 +86,7 @@ namespace BiiGBackend.ApplicationCore.Services
             return ResponseModal.Send(response);
         }
 
+
         public async Task<ResponseModal> GetProduct(Guid id, ClaimsPrincipal user)
         {
             var product = await _unitOfWork.Product.GetItems(u => u.Id == id, includeProperties: "ProductPhotos,ProductBrand,ProductCategory");
