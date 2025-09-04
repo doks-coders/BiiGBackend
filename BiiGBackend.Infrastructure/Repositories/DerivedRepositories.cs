@@ -125,6 +125,14 @@ namespace BiiGBackend.Infrastructure.Repositories
         }
     }
 
+	public class WishListItemRepository : BaseRepository<WishListItem>, IWishListItemRepository
+	{
+		public WishListItemRepository(ApplicationDbContext context) : base(context)
+		{
+
+		}
+	}
+
 
 
 

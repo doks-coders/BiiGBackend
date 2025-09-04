@@ -24,7 +24,8 @@ namespace BiiGBackend.ApplicationCore.Services.RegisterServices
             services.AddScoped<IPaystackService, PaystackService>();
             services.AddScoped<IPaypalService, PaypalService>();
             services.AddScoped<IEmailSender, EmailSender>();
-            services.AddSingleton<GeoPlacesService>();
+			services.AddScoped<IWishListService, WishListService>();
+			services.AddSingleton<GeoPlacesService>();
             services.AddScoped(u => PayPalConfiguration.GetAPIContext(config.GetSection("Paypal:ClientId").Value, config.GetSection("Paypal:ClientSecret").Value, config.GetSection("Paypal:Mode").Value));
             return services;
         }

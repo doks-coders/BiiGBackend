@@ -68,9 +68,7 @@ namespace BiiGBackend.Web.Controllers
         [HttpGet("filter-products")]
         public async Task<ActionResult> FilterProduct([FromQuery] FilterProductsPaginationRequest request)
         {
-
             return await _productService.FilterProducts(request);
-
         }
 
 

@@ -15,4 +15,15 @@ namespace BiiGBackend.Infrastructure.EntityConfigurations
             //builder.HasQueryFilter(u => u.isDeleted == false);
         }
     }
+
+	public class WishlistConfigurations : IEntityTypeConfiguration<WishListItem>
+	{
+		public void Configure(EntityTypeBuilder<WishListItem> builder)
+		{
+
+			builder.OwnsMany(f => f.Users).ToJson();
+			//builder.HasQueryFilter(u => u.isDeleted == false);
+		}
+	}
+
 }

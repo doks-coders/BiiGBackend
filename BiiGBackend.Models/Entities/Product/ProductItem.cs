@@ -5,6 +5,7 @@ namespace BiiGBackend.Models.Entities.Product
 {
     public class ProductItem : BaseEntity
     {
+        public bool? isWishlisted { get; set; } 
         public bool ProductDetailsUploaded { get; set; } = false;
         public string? ProductName { get; set; }
 

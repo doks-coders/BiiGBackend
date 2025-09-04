@@ -7,8 +7,8 @@
         public ICategoryRepository Category { get; }
         public IBrandRepository Brand { get; }
         public IShoppingCartItemRepository ShoppingCartItem { get; }
-
-        public IOrderHeaderRepository OrderHeaders { get; }
+		public IWishListItemRepository WishListItems { get; }
+		public IOrderHeaderRepository OrderHeaders { get; }
         public IOrderItemsRepository OrderItems { get; }
         public ICollectionsRepository Collections { get; }
         public IStaticDataRepository StaticDatas { get; }

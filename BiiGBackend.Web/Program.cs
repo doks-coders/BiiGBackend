@@ -33,9 +33,9 @@ namespace BiiGBackend.Web
             builder.Services.RegisterServices(builder.Configuration);
             builder.Services.AddHttpContextAccessor();
 
+		
 
-
-            builder.Services.AddCors(options =>
+			builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
                     builder => builder

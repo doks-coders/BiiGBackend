@@ -53,6 +53,12 @@ namespace BiiGBackend.Infrastructure.Repositories.Interfaces
     {
 
     }
+	public interface IWishListItemRepository : IBaseRepository<WishListItem>
+	{
+
+	}
+
+	
 
 }
 

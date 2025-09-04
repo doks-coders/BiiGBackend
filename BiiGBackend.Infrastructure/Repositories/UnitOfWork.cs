@@ -16,6 +16,8 @@ namespace BiiGBackend.Infrastructure.Repositories
         public ICollectionsRepository Collections { get; }
         public IStaticDataRepository StaticDatas { get; }
 
+        public IWishListItemRepository WishListItems { get; }
+
         private readonly ApplicationDbContext _context;
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -29,9 +31,10 @@ namespace BiiGBackend.Infrastructure.Repositories
             OrderItems = new OrderItemsRepository(context);
             Collections = new CollectionRepository(context);
             StaticDatas = new StaticDataRepository(context);
+            WishListItems = new WishListItemRepository(context);
 
 
-        }
+		}
 
         public async Task<bool> Save()
         {

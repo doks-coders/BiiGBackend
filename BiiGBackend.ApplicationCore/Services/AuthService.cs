@@ -68,8 +68,8 @@ namespace BiiGBackend.ApplicationCore.Services
 
             if (_userManager.Users.Any(u => u.Email.ToLower() == request.Email.ToLower())) throw new CustomException(ErrorCodes.UserExist);
             ApplicationUser user = new();
-            user.Email = request.Email;
-            user.UserName = request.Email;
+            user.Email = request.Email.ToLower();
+            user.UserName = request.Email.ToLower();
             user.AccountType = role;
             user.PasswordLock = false;
             var response = await _userManager.CreateAsync(user);
@@ -90,8 +90,6 @@ namespace BiiGBackend.ApplicationCore.Services
             return ResponseModal.Send(apiResponse);
         }
 
-
-
         public async Task<ResponseModal> Register(RegisterUserRequestComplete request, string? role = RoleConstants.Customer)
         {
             var validator = new RegisterUserValidatorsComplete();
@@ -100,8 +98,8 @@ namespace BiiGBackend.ApplicationCore.Services
 
             if (_userManager.Users.Any(u => u.Email.ToLower() == request.Email.ToLower())) throw new CustomException("User not verified");
             ApplicationUser user = new();
-            user.Email = request.Email;
-            user.UserName = request.Email;
+            user.Email = request.Email.ToLower();
+            user.UserName = request.Email.ToLower();
             user.Role = role;
             user.AccountType = role;
             user.PasswordLock = true;
@@ -126,9 +124,6 @@ namespace BiiGBackend.ApplicationCore.Services
             return ResponseModal.Send(apiResponse);
         }
 
-
-
-
         private string GetUrl()
         {
 
@@ -136,7 +131,6 @@ namespace BiiGBackend.ApplicationCore.Services
             return $"{request.Scheme}://{request.Host}{request.PathBase}";
 
         }
-
 
         public async Task<bool> ConfirmEmail(string userId, string token)
         {
@@ -235,7 +229,7 @@ namespace BiiGBackend.ApplicationCore.Services
 
             Log.Information(verifyUrl);
 
-            string subject = "Set-Password";
+            string subject = "Set Password";
             string htmlMessage = @$"<p>
    Thanks for registering with us. <br>
    To set a password for your account please click 
@@ -271,7 +265,7 @@ namespace BiiGBackend.ApplicationCore.Services
 
             Log.Information(verifyUrl);
 
-            string subject = "Reset-Password";
+            string subject = "Reset Password";
             string htmlMessage = @$"<p>
    Please, use this link to reset the password for your account please click <br>
 <a href=""{verifyUrl}"" target=""_blank"" rel=""noopener noreferrer"">Reset Password</a>. <br>
