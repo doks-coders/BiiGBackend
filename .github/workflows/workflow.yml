@@ -7,7 +7,7 @@ on:
 
 env:
   DOCKER_IMAGE: guonnie/biigbackend     # change if needed
-  DOCKER_CONTEXT: .            # path to folder with Dockerfile (adjust if yours differs)
+  DOCKER_CONTEXT: ./  # path to folder with Dockerfile (adjust if yours differs)
 
 jobs:
   build-push-deploy:
